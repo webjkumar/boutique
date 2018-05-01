@@ -32,8 +32,6 @@ userController.login = function (req, res) {
     res.render('login');
 };
 
-function next1(err){ console.log(err)}
-
 // Post login
 userController.doLogin = function (req, res, next) {
     passport.authenticate("local", function (err, user, info) {
@@ -54,19 +52,61 @@ userController.doLogin = function (req, res, next) {
             //return res.send(201, user);
             res.redirect('/');
         });
-
-        //res.redirect('/');
     })(req, res, next);
-    
-    //passport.authenticate('local')(req, res, function () {
-      //  res.redirect('/');
-    //});
 };
 
 // logout
 userController.logout = function (req, res) {
     req.logout();
     res.redirect('/');
+};
+
+
+// Create and Save a new Note
+userController.create = (req, res) => {
+    // Validate request
+    if (!req.body.content) {
+        return res.status(400).send({
+            message: "Note content can not be empty"
+        });
+    }
+
+    // Create a Note
+    const user = new User({
+        name : req.body.name,
+        password: req.body.password,
+        username : req.body.username
+    });
+
+    // Save Note in the database
+    user.save()
+    .then(data => {
+        res.send(data);
+    }).catch(err => {
+        res.status(500).send({
+            message: err.message || "Some error occurred while creating the Note."
+        });
+    });
+};
+
+// Retrieve and return all notes from the database.
+userController.findAll = (req, res) => {
+
+};
+
+// Find a single note with a noteId
+userController.findOne = (req, res) => {
+
+};
+
+// Update a note identified by the noteId in the request
+userController.update = (req, res) => {
+
+};
+
+// Delete a note with the specified noteId in the request
+userController.delete = (req, res) => {
+
 };
 
 module.exports = userController;

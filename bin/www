@@ -7,12 +7,14 @@
 var app = require('../app');
 var debug = require('debug')('node-passport-auth:server');
 var http = require('http');
+var config = require('../config.js');
+
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '9090');
+var port = normalizePort(process.env.PORT || config.expressPort);
 app.set('port', port);
 
 /**

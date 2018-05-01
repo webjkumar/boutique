@@ -15,6 +15,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/boutique')
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+var pop = require('./routes/pop');
 
 var app = express();
 
@@ -39,6 +40,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
+app.use('/pop', pop);
 
 // passport configuration
 var User = require('./models/user');
