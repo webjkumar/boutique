@@ -9,7 +9,6 @@ var debug = require('debug')('node-passport-auth:server');
 var http = require('http');
 var config = require('../config.js');
 
-
 /**
  * Get port from environment and store in Express.
  */
@@ -22,6 +21,8 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
+var io = require('socket.io')(server);
+app.set('socketio', io);
 
 /**
  * Listen on provided port, on all network interfaces.
@@ -30,6 +31,21 @@ var server = http.createServer(app);
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
+
+
+
+// socket io
+io.on("connection", (socket) => {
+  console.log("Socket is connected...")
+});
+/*
+io.on("end", (socket) => {
+  socket.disconnect(0);
+});
+*/
+
+
+
 
 /**
  * Normalize a port into a number, string, or false.

@@ -8,6 +8,7 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
+
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://127.0.0.1:27017/boutique')
     .then(() => console.log('connection succesful'))
@@ -16,8 +17,11 @@ mongoose.connect('mongodb://127.0.0.1:27017/boutique')
 var index = require('./routes/index');
 var users = require('./routes/users');
 var pop = require('./routes/pop');
+var chatRoute = require('./routes/chats');
 
 var app = express();
+
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -41,9 +45,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/users', users);
 app.use('/pop', pop);
+app.use('/chats', chatRoute);
 
 // passport configuration
 var User = require('./models/user');
+
 //passport.use(new LocalStrategy(User.authenticate()));
 passport.use(new LocalStrategy(
     function (username, password, done) {

@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  .container
+    form.form-chatting(role='form', action="/chats",method="post", style='max-width: 300px;') 
+      h2.form-chatting-heading Chats
+      input.form-control(type='text', name="name", id='txtName', placeholder='Name')
+      textarea.form-control(name='chat', id='txtMessage', placeholder='Message')
+      button.btn.btn-lg.btn-primary.btn-block(type='submit', id='send') Send
+
+    div(id='messages')
+
+    p #{chats.chats}
+
